@@ -1,15 +1,14 @@
 const fs = require('fs/promises')
 // const contacts = require('./contacts.json')
 const path = require('path')
+const { v4 } = require('uuid')
 
 const contacts = path.resolve('./model/contacts.json')
-// console.log(contacts)
 
 const listContacts = async () => {
   const info = await fs.readFile(contacts)
   console.log('listcontacts has been executed')
   const allContacts = JSON.parse(info)
-  console.table(allContacts)
   return allContacts
 }
 
@@ -24,8 +23,8 @@ const getContactById = async (contactId) => {
 
 const removeContact = async (contactId) => {
   const contactsList = await listContacts()
-  const contactToDelete = contactsList.find(person => person.id === parseInt(contactId))
-  await contactsList.filter(contact => contact.id !== parseInt(contactId))
+  const contactToDelete = contactsList.find(person => person.id === contactId)
+  await contactsList.filter(contact => contact.id !== contactId)
   console.table(contactToDelete)
   if (contactToDelete) {
     return contactToDelete
@@ -34,9 +33,32 @@ const removeContact = async (contactId) => {
   }
 }
 
-const addContact = async (body) => {}
+const addContact = async (body) => {
+  const allContacts = await listContacts()
+  const newContact = { id: v4(), ...body }
+  const isInList = allContacts.find(contact => contact.phone === newContact.phone)
+  if (isInList) {
+    console.log('Contact is already in list')
+    return
+  };
+  allContacts.push(newContact)
+  await fs.writeFile(contacts, JSON.stringify(allContacts))
+  // const updatedContactsList = await listContacts()
+  // console.log(updatedContactsList)
+  console.table(newContact)
+  return newContact
+}
 
-const updateContact = async (contactId, body) => {}
+const updateContact = async (contactId, body) => {
+  const allContacts = await listContacts()
+  const index = allContacts.findIndex(item => item.id === contactId)
+  if (index === -1) {
+    return null
+  }
+  allContacts[index] = { ...body }
+  await fs.writeFile(contacts, JSON.stringify(allContacts))
+  return allContacts[index]
+}
 
 module.exports = {
   listContacts,
