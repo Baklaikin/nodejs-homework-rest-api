@@ -7,14 +7,13 @@ const contacts = path.resolve('./model/contacts.json')
 
 const listContacts = async () => {
   const info = await fs.readFile(contacts)
-  console.log('listcontacts has been executed')
   const allContacts = JSON.parse(info)
   return allContacts
 }
 
 const getContactById = async (contactId) => {
   const contactsList = await listContacts()
-  const contact = contactsList.find(person => person.id === parseInt(contactId))
+  const contact = contactsList.find(person => person.id.toString() === contactId)
   console.table(contact)
   if (contact) {
     return contact
@@ -43,8 +42,6 @@ const addContact = async (body) => {
   };
   allContacts.push(newContact)
   await fs.writeFile(contacts, JSON.stringify(allContacts))
-  // const updatedContactsList = await listContacts()
-  // console.log(updatedContactsList)
   console.table(newContact)
   return newContact
 }

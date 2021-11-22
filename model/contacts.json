@@ -64,5 +64,11 @@
     "name": "Alex",
     "email": "alex@mail.com",
     "phone": "123-60-30"
+  },
+  {
+    "id": "250240ff-14a6-44af-a34f-f49f80ae7f17",
+    "name": "Igor",
+    "email": "igor@mail.com",
+    "phone": 1234644
   }
 ]
