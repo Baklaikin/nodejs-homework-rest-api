@@ -1,12 +1,10 @@
-const { listContacts} = require('../../model/index')
+const { listContacts } = require("../../model/index");
 
-const getAll = async (req, res, next) => {
-  try {
-    const allContacts = await listContacts()
-    res.status(200).json({ status: 'success', code: 200, data: { ...allContacts } })
-  } catch (error) {
-    next(error)
-  }
-}
+const getAll = async (req, res) => {
+  const allContacts = await listContacts();
+  res
+    .status(200)
+    .json({ status: "success", code: 200, data: { ...allContacts } });
+};
 
-module.exports = getAll
+module.exports = getAll;
