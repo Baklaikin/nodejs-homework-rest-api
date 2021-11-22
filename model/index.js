@@ -1,8 +1,6 @@
 const fs = require('fs/promises')
-// const contacts = require('./contacts.json')
 const path = require('path')
 const { v4 } = require('uuid')
-
 const contacts = path.resolve('./model/contacts.json')
 
 const listContacts = async () => {
