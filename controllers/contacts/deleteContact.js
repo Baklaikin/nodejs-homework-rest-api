@@ -1,8 +1,8 @@
-const { removeContact } = require("../../model/index");
+const { Contact } = require("../../schemas/schema");
 
 const deleteContact = async (req, res) => {
   const { contactId } = req.params;
-  const contactToDelete = await removeContact(contactId);
+  const contactToDelete = await Contact.findByIdAndDelete(contactId);
   if (contactToDelete) {
     res
       .status(200)

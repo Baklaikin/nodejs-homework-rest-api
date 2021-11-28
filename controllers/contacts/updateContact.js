@@ -1,5 +1,5 @@
-const { updateContact } = require("../../model/index");
-const contactsScheme = require("../../schemas/schema");
+const { contactsScheme } = require("../../schemas/schema");
+const { Contact } = require("../../schemas/schema");
 
 const changeContact = async (req, res) => {
   const { body } = req;
@@ -10,7 +10,10 @@ const changeContact = async (req, res) => {
     throw error;
   }
   const { contactId } = req.params;
-  const updateContacts = await updateContact(contactId, body);
+  const updateContacts = await Contact.findByIdAndUpdate(contactId, body, {
+    new: true,
+  });
+  console.log(updateContacts);
   if (updateContacts) {
     res
       .status(200)

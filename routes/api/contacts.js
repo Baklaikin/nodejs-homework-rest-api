@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { contacts: ctrls } = require("../../controllers/index");
 const { validation, ctrlWrapper } = require("../../middlewares");
-const contactsScheme = require("../../schemas/schema");
+const { contactsScheme } = require("../../schemas/schema");
 
 const validationMiddleware = validation(contactsScheme);
 
@@ -18,6 +18,12 @@ router.put(
   "/:contactId",
   validationMiddleware,
   ctrlWrapper(ctrls.changeContact)
+);
+
+router.patch(
+  "/:contactId/favorite",
+  validationMiddleware,
+  ctrlWrapper(ctrls.patchContact)
 );
 
 module.exports = router;
