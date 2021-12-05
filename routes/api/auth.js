@@ -10,4 +10,6 @@ router.post(
   ctrlWrapper(ctrls.signup)
 );
 
+router.post("/login", validation(joiLoginSchema), ctrlWrapper(ctrls.login));
+
 module.exports = router;
