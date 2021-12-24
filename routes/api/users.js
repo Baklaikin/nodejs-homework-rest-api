@@ -7,8 +7,12 @@ router.get("/current", auth, ctrlWrapper(ctrls.getCurrent));
 
 router.patch("/current/subscription", auth, ctrlWrapper(ctrls.subscription));
 
-router.post("/avatars", upload.single("image"), async (req, res) => {
-  console.log("file in router", req.file);
-});
+router.patch(
+  "/avatars",
+  upload.single("image"),
+  auth,
+  upload.single("avatar"),
+  ctrlWrapper(ctrls.updateAvatar)
+);
 
 module.exports = router;
