@@ -30,19 +30,4 @@ app.use((err, req, res, next) => {
   res.status(`${status}`).json({ message: err.message });
 });
 
-const sgMail = require("@sendgrid/mail");
-require("dotenv").config();
-const { SENDMAIL_API_KEY } = process.env;
-sgMail.setApiKey(SENDMAIL_API_KEY);
-const email = {
-  to: "xelew26603@unigeol.com",
-  from: "baklaikin@gmail.com",
-  subject: "Подтверждение почты",
-  html: "<p>Mail check</p>",
-};
-
-sgMail
-  .send(email)
-  .then(() => console.log("Email sent successfully"))
-  .catch((error) => console.log(error.message));
 module.exports = app;

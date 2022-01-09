@@ -13,11 +13,16 @@ const login = async (req, res) => {
   const passwordToCompare = bcrypt.compareSync(password, user.password);
   if (!passwordToCompare) {
     throw new Unauthorized("Email or password is wrong");
+  } else if (!user.verify) {
+    throw new Unauthorized("Email is not verified yet");
   }
+
   const payload = {
     id: user._id,
   };
+
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+
   res.json({
     status: "success",
     code: 200,
